@@ -11,15 +11,17 @@ public class Meeting {
 
 
 
-    public void addMeeting(String date, String time, String title, String task) {
+    public void addMeeting(String date, String time,String type, String title, String about) {
         description.put("Time", time);
+        description.put("Type", type);
         description.put("Title", title);
-        description.put("Task", task);
+        description.put("About", about);
         meetings.put(date, description);
     }
 
     public void deleteMeeting(String key){
         meetings.remove(key);
     }
+
 
 }
