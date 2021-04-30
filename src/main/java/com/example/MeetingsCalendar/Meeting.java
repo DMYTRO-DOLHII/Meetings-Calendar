@@ -1,7 +1,6 @@
 package com.example.MeetingsCalendar;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Meeting {
@@ -21,6 +20,10 @@ public class Meeting {
 
     public void deleteMeeting(String key){
         meetings.remove(key);
+    }
+
+    public Map<String, Map> getAllMeetings(){
+        return meetings;
     }
 
 
