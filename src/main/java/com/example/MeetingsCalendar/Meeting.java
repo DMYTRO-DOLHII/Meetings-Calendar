@@ -1,30 +1,20 @@
 package com.example.MeetingsCalendar;
 
+import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Meeting {
 
-    private Map<String, Map> meetings = new HashMap<>();
-    private Map<String, String> description = new HashMap<>();
+    private ZonedDateTime startsAt;
+    private Duration duration;
+    private String id;
 
-
-
-    public void addMeeting(String date, String time,String type, String title, String about) {
-        description.put("Time", time);
-        description.put("Type", type);
-        description.put("Title", title);
-        description.put("About", about);
-        meetings.put(date, description);
+    Meeting(ZonedDateTime startAt, Duration duration, String id){
+        this.startsAt = startAt;
+        this.duration = duration;
+        this.id = id;
     }
-
-    public void deleteMeeting(String key){
-        meetings.remove(key);
-    }
-
-    public Map<String, Map> getAllMeetings(){
-        return meetings;
-    }
-
 
 }

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Meetings Calendar</title>
-    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 </head>
 <body>
 	<section class="header">
@@ -19,7 +20,7 @@
 		<div class="container">
 			<div class="calendar">
 				<div class="add">
-					<a href="#" onclick="send()">ADD MEETING</a>
+					<a href="add-meeting">ADD MEETING</a>
 				</div>
 
 				<!-- <div class="meeting">
@@ -43,6 +44,12 @@
 						<h2>About</h2>
 						<h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est autem quis rerum! Ex consequatur fugiat, eum ratione sint eaque quaerat voluptatum doloribus, ipsam illo fugit iusto sequi, quis nobis, iure.</h3>
 					</div>
+					<div class="id">
+						<p id="id">1</p>
+					</div>
+					<div class="delete">
+						<i class="far fa-times-circle"></i>
+					</div>
 				</div> -->
 
 			</div>
@@ -55,7 +62,7 @@
 	<script type="text/javascript">
 
 
-//When we load main page we will find out all meetings from back and display them
+// When we load main page we will find out all meetings from back and display them
 window.onload = function(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", '/', true);
@@ -65,7 +72,6 @@ window.onload = function(){
 	xhr.onreadystatechange = function() { // Call a function when the state changes.
 	    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 	       var result = JSON.parse(xhr.response);
-	       console.log(result);
 	       buildMeetings(result);
 	    }
 	}
@@ -84,14 +90,13 @@ function buildMeetings(meetings){
 // Create a meeting
 function buildMeeting(key, value){
 
-	console.log(value["About"]);
 	// Create date block
 	var date = document.createElement("div");
 	date.classList.add("flex");
 	var dateText = document.createElement("h2");
 	dateText.innerHTML = "Date";
 	var dateTextValue = document.createElement("h3");
-	dateTextValue.innerHTML = key;
+	dateTextValue.innerHTML = value["date"];
 	date.appendChild(dateText);
 	date.appendChild(dateTextValue);
 
@@ -101,7 +106,7 @@ function buildMeeting(key, value){
 	var timeText = document.createElement("h2");
 	timeText.innerHTML = "Time";
 	var timeTextValue = document.createElement("h3");
-	timeTextValue.innerHTML = value["Time"];
+	timeTextValue.innerHTML = value["time"];
 	time.appendChild(timeText);
 	time.appendChild(timeTextValue);
 
@@ -112,7 +117,7 @@ function buildMeeting(key, value){
 	var typeText = document.createElement("h2");
 	typeText.innerHTML = "Type";
 	var typeTextValue = document.createElement("h3");
-	typeTextValue.innerHTML = value["Type"];
+	typeTextValue.innerHTML = value["type"];
 	type.appendChild(typeText);
 	type.appendChild(typeTextValue);
 
@@ -122,7 +127,7 @@ function buildMeeting(key, value){
 	var titleText = document.createElement("h2");
 	titleText.innerHTML = "Title";
 	var titleTextValue = document.createElement("h3");
-	titleTextValue.innerHTML = value["Title"];
+	titleTextValue.innerHTML = value["title"];
 	title.appendChild(titleText);
 	title.appendChild(titleTextValue);
 
@@ -132,9 +137,29 @@ function buildMeeting(key, value){
 	var aboutText = document.createElement("h2");
 	aboutText.innerHTML = "About";
 	var aboutTextValue = document.createElement("h3");
-	aboutTextValue.innerHTML = value["About"];
+	aboutTextValue.innerHTML = value["about"];
 	about.appendChild(aboutText);
 	about.appendChild(aboutTextValue);
+
+	// Create delete block
+	var _delete = document.createElement("div");
+	_delete.classList.add("delete");
+	var _deleteIcon = document.createElement("i");
+	_deleteIcon.classList.add("far");
+	_deleteIcon.classList.add("fa-times-circle");
+	_delete.addEventListener("click", function(){
+		deleteMeeting(this);
+		this.parentNode.remove();
+	});
+	_delete.appendChild(_deleteIcon);
+
+	// Create id block
+	var id = document.createElement("div");
+	id.classList.add("id");
+	var idText = document.createElement("p");
+	idText.id = "id";
+	idText.innerHTML = key;
+	id.appendChild(idText);
 
 	// Create meeting block
 	var meeting = document.createElement("div");
@@ -144,6 +169,8 @@ function buildMeeting(key, value){
 	meeting.appendChild(type);
 	meeting.appendChild(title);
 	meeting.appendChild(about);
+	meeting.appendChild(_delete);
+	meeting.appendChild(id);
 
 	// Add meeting
 	var calendar = document.querySelector(".calendar");
@@ -156,18 +183,19 @@ function buildMeeting(key, value){
 function send(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", '/send', true);
-	
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-	xhr.onreadystatechange = function() { // Call a function when the state changes.
-	    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-	       console.log(xhr.response);
-	    }
-	}
 	xhr.send();
 }
 
-
+// Delete meeting
+function deleteMeeting(meeting){
+	var id = meeting.parentNode.childNodes[6].childNodes[0].innerHTML;
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", '/delete', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send("id="+id);
+}
 
 	</script>
 

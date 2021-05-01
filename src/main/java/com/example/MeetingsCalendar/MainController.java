@@ -10,26 +10,32 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    Meeting meetings = new Meeting();
-
     @GetMapping({"/", "/main"})
     public String main(Model model){
         return "main";
+    }
+
+    @GetMapping("/add-meeting")
+    public String addMeeting(Model model){
+        return "add-meeting";
     }
 
 
     @RequestMapping(value="/", method = RequestMethod.POST)
     @ResponseBody
     public Map send(@RequestParam(required = false) String id){
-        return meetings.getAllMeetings();
+
     }
 
     @RequestMapping(value="/send", method = RequestMethod.POST)
     @ResponseBody
     public String send(){
-        meetings.addMeeting("31.12.1999", "19:00", "Audio", "Test", "About...");
-        return "Check it!";
+
     }
 
+    @RequestMapping(value="/delete", method = RequestMethod.POST)
+    public void delete(@RequestParam int id){
+
+    }
 
 }
