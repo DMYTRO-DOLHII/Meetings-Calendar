@@ -1,0 +1,62 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meetings Calendar</title>
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="../static/css/add-meeting.css" th:href="@{/css/add-meeting.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+</head>
+<body>
+	<section class="header">
+		<header>
+			<div class="container">
+				<h1>Meetings Calendar</h1>
+			</div>
+		</header>
+	</section>
+
+	<section class="add-meeting">
+		<div class="container">
+			<div class="input">
+				<div class="start">
+					<label for="dateStart">Start At: </label>
+					<input type="date" name="dateStart" id="dateStart">
+					<input type="time" name="timeStart" id="timeStart">
+				</div>
+				<div class="end">
+					<label for="dateEnd">End At:</label>
+					<input type="date" name="dateEnd" id="dateEnd">
+					<input type="time" name="timeEnd" id="timeEnd">
+				</div>
+				<input type="Submit" name="" id="" onclick="add()">
+			</div>
+		</div>
+	</section>
+
+	<script type="text/javascript">
+		
+
+function add(){
+	var dateStart = document.getElementById('dateStart').value;
+	var timeStart = document.getElementById('timeStart').value;
+	
+	var dateEnd = document.getElementById('dateEnd').value;
+	var timeEnd = document.getElementById('timeEnd').value;
+	
+	var startsAt = dateStart + "T" + timeStart + "Z";
+	var endsAt = dateEnd + "T" + timeEnd + "Z";
+
+
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", '/add', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send("timeStart=" + startsAt + "&timeEnd=" + endsAt);
+}
+
+
+
+	</script>
+</body>
+</html>
