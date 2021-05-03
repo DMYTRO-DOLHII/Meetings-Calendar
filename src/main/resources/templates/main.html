@@ -71,8 +71,7 @@ window.onload = function(){
 
 	xhr.onreadystatechange = function() { // Call a function when the state changes.
 	    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-	       var result = JSON.parse(xhr.response);
-	       buildMeetings(result);
+	    	console.log(xhr.response);
 	    }
 	}
 	xhr.send();

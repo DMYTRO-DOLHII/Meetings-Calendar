@@ -2,19 +2,58 @@ package com.example.MeetingsCalendar;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Meeting {
 
-    private ZonedDateTime startsAt;
-    private Duration duration;
-    private String id;
+    private final ZonedDateTime startsAt;
+    private final Duration duration;
+    private final String id;
 
-    Meeting(ZonedDateTime startAt, Duration duration, String id){
-        this.startsAt = startAt;
-        this.duration = duration;
-        this.id = id;
+    public ZonedDateTime getStartsAt(){
+        return startsAt;
     }
 
+    public Duration getDuration(){
+        return duration;
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    private Meeting(Builder builder) {
+        this.startsAt = builder.startsAt;
+        this.duration = builder.duration;
+        this.id = builder.id;
+    }
+
+    public static class Builder {
+
+        private ZonedDateTime startsAt;
+        private Duration duration;
+        private String id;
+
+        public Builder startsAt(ZonedDateTime startsAt) {
+            this.startsAt = startsAt;
+            return this;
+        }
+
+        public Builder duration(Duration duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Meeting build() {
+            return new Meeting(this);
+        }
+    }
 }
