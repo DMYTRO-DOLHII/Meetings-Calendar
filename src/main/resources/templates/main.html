@@ -71,7 +71,8 @@ window.onload = function(){
 
 	xhr.onreadystatechange = function() { // Call a function when the state changes.
 	    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-	    	console.log(xhr.response);
+	    	var meetings = JSON.parse(xhr.response);
+	    	buildMeetings(meetings);
 	    }
 	}
 	xhr.send();
@@ -79,68 +80,53 @@ window.onload = function(){
 
 // Create all meetings 
 function buildMeetings(meetings){
-	var keys = Object.keys(meetings);
-	for(key in keys){
-		buildMeeting(keys[key], meetings[keys[key]]);
+	for(meeting in meetings){
+		buildMeeting(meeting);
 	}
 }
 
 
 // Create a meeting
-function buildMeeting(key, value){
+function buildMeeting(m){
 
-	// Create date block
-	var date = document.createElement("div");
-	date.classList.add("flex");
-	var dateText = document.createElement("h2");
-	dateText.innerHTML = "Date";
-	var dateTextValue = document.createElement("h3");
-	dateTextValue.innerHTML = value["date"];
-	date.appendChild(dateText);
-	date.appendChild(dateTextValue);
-
-	// Create time block
+	// Time block
 	var time = document.createElement("div");
 	time.classList.add("flex");
 	var timeText = document.createElement("h2");
-	timeText.innerHTML = "Time";
+	timeText.innerHTML = "Start";
 	var timeTextValue = document.createElement("h3");
-	timeTextValue.innerHTML = value["time"];
+	timeTextValue.innerHTML = m["startsAt"];
 	time.appendChild(timeText);
 	time.appendChild(timeTextValue);
 
+	// Duration block
+	var duration = document.createElement("div");
+	duration.classList.add("flex");
+	var durationText = document.createElement("h2");
+	durationText.innerHTML = "Duration";
+	var durationTextValue = document.createElement("h3");
+	durationTextValue.innerHTML = m["duration"];
+	duration.appendChild(durationText);
+	duration.appendChild(durationTextValue);
 
-	//Create type block
-	var type = document.createElement("div");
-	type.classList.add("flex");
-	var typeText = document.createElement("h2");
-	typeText.innerHTML = "Type";
-	var typeTextValue = document.createElement("h3");
-	typeTextValue.innerHTML = value["type"];
-	type.appendChild(typeText);
-	type.appendChild(typeTextValue);
+	// Description block
+	var description = document.createElement("div");
+	description.classList.add("flex");
+	var descriptionText = document.createElement("h2");
+	descriptionText.innerHTML = "Description";
+	var descriptionTextValue = document.createElement("h3");
+	descriptionTextValue.innerHTML = m["description"];
+	description.appendChild(descriptionText);
+	description.appendChild(descriptionTextValue);
 
-	// Create type block
-	var title = document.createElement("div");
-	title.classList.add("flex");
-	var titleText = document.createElement("h2");
-	titleText.innerHTML = "Title";
-	var titleTextValue = document.createElement("h3");
-	titleTextValue.innerHTML = value["title"];
-	title.appendChild(titleText);
-	title.appendChild(titleTextValue);
+	// Id block
+	var id = document.createElement("input");
+	id.setAttribute("type", "hidden");
+	id.setAttribute("name", "id");
+	id.setAttribute("id", "id");
+	id.setAttribute("value", m["id"]);
 
-	// Create type block
-	var about = document.createElement("div");
-	about.classList.add("flex");
-	var aboutText = document.createElement("h2");
-	aboutText.innerHTML = "About";
-	var aboutTextValue = document.createElement("h3");
-	aboutTextValue.innerHTML = value["about"];
-	about.appendChild(aboutText);
-	about.appendChild(aboutTextValue);
-
-	// Create delete block
+	// Delete block
 	var _delete = document.createElement("div");
 	_delete.classList.add("delete");
 	var _deleteIcon = document.createElement("i");
@@ -152,24 +138,14 @@ function buildMeeting(key, value){
 	});
 	_delete.appendChild(_deleteIcon);
 
-	// Create id block
-	var id = document.createElement("div");
-	id.classList.add("id");
-	var idText = document.createElement("p");
-	idText.id = "id";
-	idText.innerHTML = key;
-	id.appendChild(idText);
-
-	// Create meeting block
+	// Meeting block
 	var meeting = document.createElement("div");
 	meeting.classList.add("meeting");
-	meeting.appendChild(date);
 	meeting.appendChild(time);
-	meeting.appendChild(type);
-	meeting.appendChild(title);
-	meeting.appendChild(about);
-	meeting.appendChild(_delete);
+	meeting.appendChild(duration);
+	meeting.appendChild(description);
 	meeting.appendChild(id);
+	meeting.appendChild(_delete);
 
 	// Add meeting
 	var calendar = document.querySelector(".calendar");

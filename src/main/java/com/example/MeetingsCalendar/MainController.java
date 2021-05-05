@@ -38,13 +38,15 @@ public class MainController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public void add(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime timeStart,
-                      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime timeEnd) {
+                      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime timeEnd,
+                     @RequestParam String description) {
 
         Meeting meeting = Meeting
                 .newBuilder()
                 .id(UUID.randomUUID().toString())
                 .startsAt(timeStart)
                 .duration(Duration.between(timeStart, timeEnd))
+                .description(description)
                 .build();
 
         meetingService.addMeeting(meeting);

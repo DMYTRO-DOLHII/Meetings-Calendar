@@ -7,6 +7,7 @@ public class Meeting {
 
     private final ZonedDateTime startsAt;
     private final Duration duration;
+    private final String description;
     private final String id;
 
     public ZonedDateTime getStartsAt(){
@@ -17,9 +18,14 @@ public class Meeting {
         return duration;
     }
 
+    public String getDescription(){
+        return description;
+    }
+
     public String getId(){
         return id;
     }
+
 
     public static Builder newBuilder() {
         return new Builder();
@@ -28,6 +34,7 @@ public class Meeting {
     private Meeting(Builder builder) {
         this.startsAt = builder.startsAt;
         this.duration = builder.duration;
+        this.description = builder.description;
         this.id = builder.id;
     }
 
@@ -35,6 +42,7 @@ public class Meeting {
 
         private ZonedDateTime startsAt;
         private Duration duration;
+        private String description;
         private String id;
 
         public Builder startsAt(ZonedDateTime startsAt) {
@@ -44,6 +52,11 @@ public class Meeting {
 
         public Builder duration(Duration duration) {
             this.duration = duration;
+            return this;
+        }
+
+        public Builder description(String description){
+            this.description = description;
             return this;
         }
 

@@ -19,15 +19,19 @@
 	<section class="add-meeting">
 		<div class="container">
 			<div class="input">
-				<div class="start">
+				<div class="start flex">
 					<label for="dateStart">Start At: </label>
 					<input type="date" name="dateStart" id="dateStart">
 					<input type="time" name="timeStart" id="timeStart">
 				</div>
-				<div class="end">
+				<div class="end flex">
 					<label for="dateEnd">End At:</label>
 					<input type="date" name="dateEnd" id="dateEnd">
 					<input type="time" name="timeEnd" id="timeEnd">
+				</div>
+				<div class="text flex">
+					<label for="text">Description</label>
+					<textarea name="text" id="text" cols="50" rows="3"></textarea>
 				</div>
 				<input type="Submit" name="" id="" onclick="add()">
 			</div>
@@ -43,6 +47,8 @@ function add(){
 	
 	var dateEnd = document.getElementById('dateEnd').value;
 	var timeEnd = document.getElementById('timeEnd').value;
+
+	var description = document.getElementById('text');
 	
 	var startsAt = dateStart + "T" + timeStart + "Z";
 	var endsAt = dateEnd + "T" + timeEnd + "Z";
@@ -52,7 +58,7 @@ function add(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", '/add', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send("timeStart=" + startsAt + "&timeEnd=" + endsAt);
+	xhr.send("timeStart=" + startsAt + "&timeEnd=" + endsAt + "&description=" + description);
 }
 
 
