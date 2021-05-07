@@ -21,3 +21,21 @@ textarea{
 input, textarea{
 	margin-left: 50px;
 }
+
+#submit{
+	margin: 0;
+}
+.back{
+	margin-top: 50px;
+	padding: 15px 25px;
+	background-color: #7a624b;
+	color: #fff;
+	border: 2px solid #7a624b;
+	font-family: 'Dosis', sans-serif;
+	transition: .3s;
+}
+
+.back:hover{
+	background: #fff;
+	color: #7a624b;
+}

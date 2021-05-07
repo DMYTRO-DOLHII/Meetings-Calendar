@@ -33,7 +33,8 @@
 					<label for="text">Description</label>
 					<textarea name="text" id="text" cols="50" rows="3"></textarea>
 				</div>
-				<input type="Submit" name="" id="" onclick="add()">
+				<input type="Submit" name="" id="submit" onclick="add()">
+				<a href="/" class="back">Back to Main</a>
 			</div>
 		</div>
 	</section>
@@ -48,7 +49,7 @@ function add(){
 	var dateEnd = document.getElementById('dateEnd').value;
 	var timeEnd = document.getElementById('timeEnd').value;
 
-	var description = document.getElementById('text');
+	var description = document.getElementById('text').value;
 	
 	var startsAt = dateStart + "T" + timeStart + "Z";
 	var endsAt = dateEnd + "T" + timeEnd + "Z";
