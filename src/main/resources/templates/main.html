@@ -96,7 +96,8 @@ function buildMeeting(m){
 	var timeText = document.createElement("h2");
 	timeText.innerHTML = "Start";
 	var timeTextValue = document.createElement("h3");
-	timeTextValue.innerHTML = m["startsAt"];
+	var startsAt = new Date(m["startsAt"]);
+	timeTextValue.innerHTML = startsAt.getDate() + " " + startsAt.getMonth() + " " + startsAt.getHours() + ":" + startsAt.getMinutes();
 	time.appendChild(timeText);
 	time.appendChild(timeTextValue);
 
@@ -134,7 +135,7 @@ function buildMeeting(m){
 	_deleteIcon.classList.add("far");
 	_deleteIcon.classList.add("fa-times-circle");
 	_delete.addEventListener("click", function(){
-		deleteMeeting(this);
+		// deleteMeeting(this);
 		this.parentNode.remove();
 	});
 	_delete.appendChild(_deleteIcon);
@@ -161,16 +162,6 @@ function send(){
 	xhr.open("POST", '/send', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send();
-}
-
-// Delete meeting
-function deleteMeeting(meeting){
-	var id = meeting.parentNode.childNodes[6].childNodes[0].innerHTML;
-	
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", '/delete', true);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send("id="+id);
 }
 
 	</script>
